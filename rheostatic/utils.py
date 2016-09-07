@@ -25,6 +25,7 @@ SOFTWARE.
 """
 
 
+import os
 import sys
 
 
@@ -78,7 +79,7 @@ http_status = {
 
 }
 
-directory_template = """
+directory_template = """<!DOCTYPE html>
 <html>
     <head>
         <title>Directory listing for {displaypath}</title>
@@ -92,7 +93,7 @@ directory_template = """
         <hr>
     </body>
 </html>
-"""
+""".replace('\n', os.linesep)
 
 # Define our own types for consistency cross platform.
 # Use the types defined by nginx with a few additions.
