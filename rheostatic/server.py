@@ -35,6 +35,7 @@ def serve(address, root, **kwargs):
     app = Rheostatic(root, **kwargs)
 
     server = make_server(address[0], address[1], validator(app))
+
     try:
         print ('Starting server at http://%s:%d...' % address)
         print ('Press ctrl+c to stop.')

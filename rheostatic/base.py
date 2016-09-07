@@ -26,16 +26,13 @@ SOFTWARE.
 
 import os
 import sys
+import io
 import posixpath
 import urllib
 import urlparse
 import cgi
 import wsgiref
 from email import utils as rfc822
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
 
 from . import utils
 
@@ -71,7 +68,7 @@ class Rheostatic(object):
 
         path_info = environ.get('PATH_INFO', '')
         path = self.get_full_path(path_info)
-        print 'PATH_INFO:', path_info, 'LOCAL_PATH:', path
+
         if not path.startswith(self.root):
             # Outside server root
             return self.error(404, environ, start_response)
@@ -97,7 +94,8 @@ class Rheostatic(object):
                     ('Date', rfc822.formatdate(usegmt=True)),
                     ('Last-Modified', rfc822.formatdate(file_stat.st_mtime, usegmt=True)),
                     ('Content-Length', str(file_stat.st_size)),
-                    ('Content-type', self.guess_type(path))  # TODO: add charset
+                    ('Content-type', '{}; charset={}'.format(self.guess_type(path),
+                                                             self.encoding))
                 ]
                 # TODO: add support for HTTP_IF_MODIFIED_SINCE and HTTP_IF_NONE_MATCH
                 start_response(self.get_status(200), headers)
@@ -127,7 +125,7 @@ class Rheostatic(object):
             return [b'']
         else:
             file_wrapper = environ.get('wsgi.file_wrapper', wsgiref.util.FileWrapper)
-            return file_wrapper(open(path, 'rb'))
+            return file_wrapper(io.open(path, 'rb'))
 
     def guess_type(self, path):
         extension = os.path.splitext(path)[1].lower()
@@ -148,7 +146,8 @@ class Rheostatic(object):
                 file_stat = os.stat(path)
                 headers.extend([
                     ('Content-Length', str(file_stat.st_size)),
-                    ('Content-type', self.guess_type(path))  # TODO: add charset
+                    ('Content-type', '{}; charset={}'.format(self.guess_type(path),
+                                                             self.encoding))
                 ])
                 start_response(self.get_status(code), headers)
                 return self.get_body(path, environ)
@@ -163,10 +162,10 @@ class Rheostatic(object):
         status = self.get_status(code)
         headers.extend([
             ('Content-Length', str(len(status))),
-            ('Content-type', 'text/plain')  # TODO: add charset
+            ('Content-type', 'text/plain; charset={}'.format(self.encoding))
         ])
         start_response(status, headers)
-        return [status]
+        return [status.encode(self.encoding)]
 
     def list_directory(self, path, environ, start_response):
         """ Return a directory listing. """
@@ -191,17 +190,17 @@ class Rheostatic(object):
                 urllib.quote(linkname), cgi.escape(displayname)
             ))
 
-        f = StringIO()
+        f = io.BytesIO()
         f.write(self.directory_template.format(
             displaypath = cgi.escape(urllib.unquote(wsgiref.util.request_uri(environ))),
             items = '\n'.join(items)
-        ))
+        ).encode(self.encoding))
         length = f.tell()
         f.seek(0)
 
         headers = [
             ('Content-Length', str(length)),
-            ('Content-type', 'text/html')  # TODO: add charset
+            ('Content-type', 'text/html; charset={}'.format(self.encoding))
         ]
         start_response(self.get_status(200), headers)
         file_wrapper = environ.get('wsgi.file_wrapper', wsgiref.util.FileWrapper)
