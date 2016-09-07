@@ -28,11 +28,15 @@ import os
 import sys
 import io
 import posixpath
-import urllib
-import urlparse
 import cgi
 import wsgiref
 from email import utils as rfc822
+try:
+    from urllib.parse import unquote as urlunquote
+    from urllib.parse import quote as urlquote
+except ImportError:
+    from urllib import unquote as urlunquote
+    from urllib import quote as urlquote
 
 from . import utils
 
@@ -108,7 +112,7 @@ class Rheostatic(object):
     def get_full_path(self, path_info):
         """ Get local filename path from path_info. """
         path_info = utils.decode_path_info(path_info)
-        path_info = posixpath.normpath(urllib.unquote(path_info))
+        path_info = posixpath.normpath(urlunquote(path_info))
         path = os.path.normpath(self.root + path_info)
         if (self.default_extension and
                 not os.path.exists(path) and
@@ -187,12 +191,12 @@ class Rheostatic(object):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
             items.append('<li><a href="{}">{}</a></li>'.format(
-                urllib.quote(linkname), cgi.escape(displayname)
+                urlquote(linkname), cgi.escape(displayname)
             ))
 
         f = io.BytesIO()
         f.write(self.directory_template.format(
-            displaypath = cgi.escape(urllib.unquote(wsgiref.util.request_uri(environ))),
+            displaypath = cgi.escape(urlunquote(wsgiref.util.request_uri(environ))),
             items = '\n'.join(items)
         ).encode(self.encoding))
         length = f.tell()
