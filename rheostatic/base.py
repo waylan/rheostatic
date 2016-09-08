@@ -72,7 +72,7 @@ class Rheostatic(object):
 
         path_info = environ.get('PATH_INFO', '')
         path = self.get_full_path(path_info)
-
+        print path_info, path
         if not path.startswith(self.root):
             # Outside server root
             return self.error(404, environ, start_response)
@@ -156,20 +156,20 @@ class Rheostatic(object):
                 start_response(self.get_status(code), headers)
                 return self.get_body(path, environ)
             except (IOError, OSError):
-                self.simple_error(code, environ, start_response, headers)
+                return self.simple_error(code, environ, start_response, headers)
         else:
-            self.simple_error(code, environ, start_response, headers)
+            return self.simple_error(code, environ, start_response, headers)
 
     def simple_error(self, code, environ, start_response, headers=None):
         """ Send a plain text error. """
         headers = headers or []
-        status = self.get_status(code)
+        status = self.get_status(code).encode(self.encoding)
         headers.extend([
             ('Content-Length', str(len(status))),
             ('Content-type', 'text/plain; charset={}'.format(self.encoding))
         ])
         start_response(status, headers)
-        return [status.encode(self.encoding)]
+        return [status]
 
     def list_directory(self, path, environ, start_response):
         """ Return a directory listing. """

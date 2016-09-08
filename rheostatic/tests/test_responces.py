@@ -177,19 +177,18 @@ class TestResponses(TestCase):
             content=b''
         )
 
-    # TODO: fix this??
-    # def test_unsupported_method(self):
-    #    self.assertResponse(
-    #        app=make_app(),
-    #        method='POST',
-    #        url='/',
-    #        status=405,
-    #        headers={
-    #            'Allow': 'GET, HEAD',
-    #            'Content-type': 'text/plain; charset=utf-8'
-    #        },
-    #        content=b'405 Method Not Allowed'
-    #    )
+    def test_unsupported_method(self):
+        self.assertResponse(
+            app=make_app(),
+            method='POST',
+            url='/',
+            status=405,
+            headers={
+                'Allow': 'GET, HEAD',
+                'Content-type': 'text/plain; charset=utf-8'
+            },
+            content=b'405 Method Not Allowed'
+        )
 
     def test_get_not_found(self):
         self.assertResponse(
