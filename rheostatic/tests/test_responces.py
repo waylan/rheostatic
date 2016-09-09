@@ -131,6 +131,46 @@ class TestResponses(TestCase):
             content=b''
         )
 
+    def test_get_image(self):
+        self.assertResponse(
+            app=make_app(),
+            method='GET',
+            url='/favicon.ico',
+            status=200,
+            headers={'Content-type': 'image/x-icon; charset=utf-8'},
+            content=get_file_content('favicon.ico')
+        )
+
+    def test_head_image(self):
+        self.assertResponse(
+            app=make_app(),
+            method='HEAD',
+            url='/favicon.ico',
+            status=200,
+            headers={'Content-type': 'image/x-icon; charset=utf-8'},
+            content=b''
+        )
+
+    def test_get_default_type(self):
+        self.assertResponse(
+            app=make_app(),
+            method='GET',
+            url='/subdir/unknown-file-type.abc',
+            status=200,
+            headers={'Content-type': 'application/octet-stream; charset=utf-8'},
+            content=get_file_content('subdir/unknown-file-type.abc')
+        )
+
+    def test_head_default_type(self):
+        self.assertResponse(
+            app=make_app(),
+            method='HEAD',
+            url='/subdir/unknown-file-type.abc',
+            status=200,
+            headers={'Content-type': 'application/octet-stream; charset=utf-8'},
+            content=b''
+        )
+
     def test_get_dir_listing(self):
         self.assertResponse(
             app=make_app(),
@@ -227,5 +267,87 @@ class TestResponses(TestCase):
             url='/other',
             status=200,
             headers={'Content-type': 'text/html; charset=utf-8'},
+            content=b''
+        )
+
+    def test_get_custom_index(self):
+        self.assertResponse(
+            app=make_app(index_file='other.html'),
+            method='GET',
+            url='/',
+            status=200,
+            headers={'Content-type': 'text/html; charset=utf-8'},
+            content=get_file_content('other.html')
+        )
+
+    def test_head_custom_index(self):
+        self.assertResponse(
+            app=make_app(index_file='other.html'),
+            method='HEAD',
+            url='/',
+            status=200,
+            headers={'Content-type': 'text/html; charset=utf-8'},
+            content=b''
+        )
+
+    def test_get_custom_encoding(self):
+        self.assertResponse(
+            app=make_app(encoding='ascii'),
+            method='GET',
+            url='/',
+            status=200,
+            headers={'Content-type': 'text/html; charset=ascii'},
+            content=get_file_content('index.html')
+        )
+
+    def test_head_custom_encoding(self):
+        self.assertResponse(
+            app=make_app(encoding='ascii'),
+            method='HEAD',
+            url='/',
+            status=200,
+            headers={'Content-type': 'text/html; charset=ascii'},
+            content=b''
+        )
+
+    def test_get_custom_dir_listing(self):
+        template = b'A replacement template'
+        self.assertResponse(
+            app=make_app(directory_template=template),
+            method='GET',
+            url='/subdir/',
+            status=200,
+            headers={'Content-type': 'text/html; charset=utf-8'},
+            content=template
+        )
+
+    def test_head_custom_dir_listing(self):
+        template = b'A replacement template'
+        self.assertResponse(
+            app=make_app(directory_template=template),
+            method='HEAD',
+            url='/subdir/',
+            status=200,
+            headers={'Content-type': 'text/html; charset=utf-8'},
+            content=b''
+        )
+
+    def test_get_custom_default_type(self):
+        self.assertResponse(
+            app=make_app(default_type='text/plain'),
+            method='GET',
+            url='/subdir/unknown-file-type.abc',
+            status=200,
+            headers={'Content-type': 'text/plain; charset=utf-8'},
+            content=get_file_content('subdir/unknown-file-type.abc')
+        )
+
+    def test_head_custom_default_type(self):
+        self.assertResponse(
+            app=make_app(default_type='text/plain'),
+            method='HEAD',
+            url='/subdir/unknown-file-type.abc',
+            status=200,
+            headers={'Content-type': 'text/plain; charset=utf-8'},
             content=b''
         )

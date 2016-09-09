@@ -28,4 +28,4 @@ from . import serve
 import os
 
 
-serve(('127.0.0.1', 8000), os.getcwd(), default_extension='.html')
+serve(('127.0.0.1', 8000), os.path.join(os.getcwd(), 'rheostatic/tests/data/'), default_extension='.html')

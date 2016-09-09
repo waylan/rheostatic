@@ -72,7 +72,7 @@ class Rheostatic(object):
 
         path_info = environ.get('PATH_INFO', '')
         path = self.get_full_path(path_info)
-        print path_info, path
+
         if not path.startswith(self.root):
             # Outside server root
             return self.error(404, environ, start_response)
