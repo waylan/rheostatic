@@ -29,6 +29,7 @@ from wsgiref.simple_server import make_server
 
 from .base import Rheostatic
 
+
 def serve(address, root, **kwargs):
     """ Serve static files from root directory. """
 

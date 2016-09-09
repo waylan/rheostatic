@@ -97,7 +97,7 @@ directory_template = """<!DOCTYPE html>
 
 # Define our own types for consistency cross platform.
 # Use the types defined by nginx with a few additions.
-types_map =  {
+types_map = {
     '.3gp': 'video/3gpp',
     '.3gpp': 'video/3gpp',
     '.7z': 'application/x-7z-compressed',

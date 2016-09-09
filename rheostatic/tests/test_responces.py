@@ -39,14 +39,17 @@ from rheostatic.base import Rheostatic
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
+
 def make_app(**kwargs):
     def wrapper():
         return Rheostatic(ROOT, **kwargs)
     return wrapper
 
+
 def get_file_content(path):
     with io.open(os.path.join(ROOT, path), 'rb') as f:
         return f.read()
+
 
 class TestResponses(TestCase):
     def assertResponse(self, app, method, url, status=None, headers=None, content=None):

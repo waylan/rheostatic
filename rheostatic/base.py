@@ -25,7 +25,6 @@ SOFTWARE.
 """
 
 import os
-import sys
 import io
 import posixpath
 import cgi
@@ -196,8 +195,8 @@ class Rheostatic(object):
 
         f = io.BytesIO()
         f.write(self.directory_template.format(
-            displaypath = cgi.escape(urlunquote(wsgiref.util.request_uri(environ))),
-            items = os.linesep.join(items)
+            displaypath=cgi.escape(urlunquote(wsgiref.util.request_uri(environ))),
+            items=os.linesep.join(items)
         ).encode(self.encoding))
         length = f.tell()
         f.seek(0)

@@ -25,6 +25,6 @@ SOFTWARE.
 """
 
 from .server import serve
-from .utils import __version__
+from .utils import __version__  # noqa: F401
 
 __all__ = ['serve']
