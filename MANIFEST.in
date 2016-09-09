@@ -1,0 +1,7 @@
+recursive-include rheostatic *.py *.html *.ico *.abc
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+include setup.py
+include setup.cfg
+include LICENSE
+include README.rst
