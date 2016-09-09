@@ -61,10 +61,10 @@ __version__ = _get_version()
 # Follow Django in treating URLs as UTF-8 encoded (which requires undoing the
 # implicit ISO-8859-1 decoding applied in Python 3). Strictly speaking, URLs
 # should only be ASCII anyway, but UTF-8 can be found in the wild.
-if sys.version_info[0] >= 3:
+if sys.version_info[0] >= 3:                                    # pragma: no cover
     def decode_path_info(path_info):
         return path_info.encode('iso-8859-1').decode('utf-8')
-else:
+else:                                                           # pragma: no cover
     def decode_path_info(path_info):
         return path_info.decode('utf-8')
 

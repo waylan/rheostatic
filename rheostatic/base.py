@@ -30,10 +30,10 @@ import posixpath
 import cgi
 import wsgiref
 from email import utils as rfc822
-try:
+try:                                                    # pragma: no cover
     from urllib.parse import unquote as urlunquote
     from urllib.parse import quote as urlquote
-except ImportError:
+except ImportError:                                     # pragma: no cover
     from urllib import unquote as urlunquote
     from urllib import quote as urlquote
 
@@ -72,7 +72,7 @@ class Rheostatic(object):
         path_info = environ.get('PATH_INFO', '')
         path = self.get_full_path(path_info)
 
-        if not path.startswith(self.root):
+        if not path.startswith(self.root):              # pragma: no cover
             # Outside server root
             return self.error(404, environ, start_response)
 
@@ -81,7 +81,7 @@ class Rheostatic(object):
                 # Dir does not end with /, redirect
                 location = wsgiref.util.request_uri(environ, include_query=False) + '/'
                 if environ.get('QUERY_STRING'):
-                    location += '?' + environ.get('QUERY_STRING')
+                    location += '?' + environ.get('QUERY_STRING')  # pragma: no cover
                 headers = [('Location', location)]
                 return self.simple_error(301, environ, start_response, headers)
             index = os.path.join(path, self.index_file)
@@ -103,7 +103,7 @@ class Rheostatic(object):
                 # TODO: add support for HTTP_IF_MODIFIED_SINCE and HTTP_IF_NONE_MATCH
                 start_response(self.get_status(200), headers)
                 return self.get_body(path, environ)
-            except (IOError, OSError):
+            except (IOError, OSError):                  # pragma: no cover
                 return self.error(404, environ, start_response)
 
         return self.error(404, environ, start_response)
@@ -154,7 +154,7 @@ class Rheostatic(object):
                 ])
                 start_response(self.get_status(code), headers)
                 return self.get_body(path, environ)
-            except (IOError, OSError):
+            except (IOError, OSError):                  # pragma: no cover
                 return self.simple_error(code, environ, start_response, headers)
         else:
             return self.simple_error(code, environ, start_response, headers)
@@ -174,7 +174,7 @@ class Rheostatic(object):
         """ Return a directory listing. """
         try:
             names = os.listdir(path)
-        except os.error:
+        except os.error:                                # pragma: no cover
             return self.error(404, environ, start_response)
         names.sort(key=lambda a: a.lower())
 
