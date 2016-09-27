@@ -30,7 +30,7 @@ from wsgiref.simple_server import make_server
 from .base import Rheostatic
 
 
-def serve(address, root, **kwargs):
+def serve(address, root, **kwargs):                     # pragma: no cover
     """ Serve static files from root directory. """
 
     app = Rheostatic(root, **kwargs)
@@ -38,7 +38,8 @@ def serve(address, root, **kwargs):
     server = make_server(address[0], address[1], validator(app))
 
     try:
-        print ('Starting server at http://%s:%d...' % address)
+        print ('Starting server at http://%s:%d/...' % address)
+        print ('Serving files from %s' % app.root)
         print ('Press ctrl+c to stop.')
         server.serve_forever()
     except KeyboardInterrupt:

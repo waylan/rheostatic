@@ -43,6 +43,13 @@ setup(
     license='MIT License',
     packages=['rheostatic', 'rheostatic.tests'],
     include_package_data=True,
+    entry_points={
+        'console_scripts': [
+            'rheostatic = rheostatic.__main__:cli',
+        ]
+    },
+    test_suite = 'rheostatic.tests',
+    tests_require =['wsgi_intercept'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',

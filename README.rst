@@ -20,7 +20,9 @@ become available from PyPI.
 Usage
 -----
 
-TODO...
+For usage, run `rheostatic --help`.
+
+If the `rheostatic` command cannot be found, try running `python -m rheostatic` instead.
 
 Dependencies
 ------------
