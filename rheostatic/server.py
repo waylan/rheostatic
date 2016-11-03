@@ -24,6 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+from __future__ import print_function
 from wsgiref.validate import validator
 from wsgiref.simple_server import make_server
 
@@ -38,9 +39,9 @@ def serve(address, root, **kwargs):                     # pragma: no cover
     server = make_server(address[0], address[1], validator(app))
 
     try:
-        print ('Starting server at http://%s:%d/...' % address)
-        print ('Serving files from %s' % app.root)
-        print ('Press ctrl+c to stop.')
+        print('Starting server at http://%s:%d/...' % address)
+        print('Serving files from %s' % app.root)
+        print('Press ctrl+c to stop.')
         server.serve_forever()
     except KeyboardInterrupt:
-        print ('Quiting...')
+        print('Quiting...')

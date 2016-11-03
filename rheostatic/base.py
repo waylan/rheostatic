@@ -27,15 +27,16 @@ SOFTWARE.
 import os
 import io
 import posixpath
-import cgi
 import wsgiref
 from email import utils as rfc822
 try:                                                    # pragma: no cover
     from urllib.parse import unquote as urlunquote
     from urllib.parse import quote as urlquote
+    from html import escape as html_escape
 except ImportError:                                     # pragma: no cover
     from urllib import unquote as urlunquote
     from urllib import quote as urlquote
+    from cgi import escape as html_escape
 
 from . import utils
 
@@ -190,12 +191,12 @@ class Rheostatic(object):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
             items.append('<li><a href="{}">{}</a></li>'.format(
-                urlquote(linkname), cgi.escape(displayname)
+                urlquote(linkname), html_escape(displayname)
             ))
 
         f = io.BytesIO()
         f.write(self.directory_template.format(
-            displaypath=cgi.escape(urlunquote(wsgiref.util.request_uri(environ))),
+            displaypath=html_escape(urlunquote(wsgiref.util.request_uri(environ))),
             items=os.linesep.join(items)
         ).encode(self.encoding))
         length = f.tell()
