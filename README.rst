@@ -15,10 +15,14 @@ Features
 * Serves custom error pages.
 * Does not require the server root to be the current working directory.
 
+.. _options:
+
 Options
 =======
 
 Rheostatic currently supports the following options:
+
+.. _root:
 
 root
 ----
@@ -28,6 +32,8 @@ directory. Usually represented by ``/`` in the URL (for example
 ``http://example.com/``). When ``root`` is set to a relative path, the local
 filesystem path is resolved as an absolute path relative to the current working
 directory. Absolute paths are used as-is.
+
+.. _index_file:
 
 index_file
 ----------
@@ -44,6 +50,8 @@ default_type
 
 The ContentType returned for a file when the type is unknown. Defaults to
 ``application/octet-stream``.
+
+.. _encoding:
 
 encoding
 --------
@@ -95,12 +103,8 @@ file is requested outside of the ``root`` directory. The ``root`` directory can
 exist anywhere on your filesystem as long as Rheostatic has permission to read
 the files.
 
-.. _root: #root
-
 Ensure that all files are saved using the same encoding and that that encoding
 is being used by Rheostatic. See `encoding`_ for details.
-
-.. _encoding: #encoding
 
 A file's ContentType is determined by its file extension. For best results, use
 common file extensions for your files. A list of known file extensions and the
@@ -113,8 +117,6 @@ example ``/``, or ``/path/to/some/dir/``), then that directory needs to contain 
 index file. Be sure to use the file name for the index file set by the
 `index_file`_ option. The default for most servers (including Rheostatic) is
 ``index.html``.
-
-.. _index_file: #index_file
 
 If a directory does not contain an index file, then Rheostatic will return a
 directory listing of all the files in that directory (excluding files with names
@@ -179,7 +181,6 @@ passed to any wsgi server. When initializing the class, you may pass in any
 
     print app.root
 
-.. _options: #options
 
 Infrequently Asked Questions
 ============================
