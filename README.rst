@@ -15,14 +15,10 @@ Features
 * Serves custom error pages.
 * Does not require the server root to be the current working directory.
 
-.. _options:
-
 Options
 =======
 
 Rheostatic currently supports the following options:
-
-.. _root:
 
 root
 ----
@@ -32,8 +28,6 @@ directory. Usually represented by ``/`` in the URL (for example
 ``http://example.com/``). When ``root`` is set to a relative path, the local
 filesystem path is resolved as an absolute path relative to the current working
 directory. Absolute paths are used as-is.
-
-.. _index_file:
 
 index_file
 ----------
@@ -50,8 +44,6 @@ default_type
 
 The ContentType returned for a file when the type is unknown. Defaults to
 ``application/octet-stream``.
-
-.. _encoding:
 
 encoding
 --------
