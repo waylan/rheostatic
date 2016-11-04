@@ -6,6 +6,9 @@ Rheostatic
 
 A Static File Server with options.
 
+.. contents:: Table of Contents
+   :backlinks: top
+
 Features
 ========
 
@@ -14,6 +17,22 @@ Features
   extensionless files, index directories, etc.) See `options`_ for specifics.
 * Serves custom error pages.
 * Does not require the server root to be the current working directory.
+* |build| |coverage| |status| |version| |format| |pyversions| |license|
+
+.. |build| image:: https://img.shields.io/travis/waylan/rheostatic/master.svg
+   :target: https://travis-ci.org/waylan/rheostatic
+.. |coverage| image:: https://img.shields.io/coveralls/waylan/rheostatic/master.svg
+   :target: https://coveralls.io/r/waylan/rheostatic?branch=master
+.. |status| image:: https://img.shields.io/pypi/status/rheostatic.svg
+   :target: http://pypi.python.org/pypi/rheostatic
+.. |version| image:: https://img.shields.io/pypi/v/rheostatic.svg
+   :target: http://pypi.python.org/pypi/rheostatic
+.. |format| image:: https://img.shields.io/pypi/format/rheostatic.svg
+   :target: http://pypi.python.org/pypi/rheostatic#downloads
+.. |pyversions| image:: https://img.shields.io/pypi/pyversions/rheostatic.svg
+   :target: http://pypi.python.org/pypi/rheostatic
+.. |license| image:: https://img.shields.io/pypi/l/rheostatic.svg
+   :target: https://opensource.org/licenses/MIT
 
 Options
 =======
@@ -160,7 +179,7 @@ the available `options`_.
 
 Under the hood, the ``serve`` function creates an instance of the class
 ``rheostatic.base.Rheostatic`` and passes it to a simple wsgi server as a wsgi
-application. For lower level usage, in instance of the class may be created and
+application. For lower level usage, an instance of the class may be created and
 passed to any wsgi server. When initializing the class, you may pass in any
 `options`_ as keywords::
 
