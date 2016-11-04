@@ -240,3 +240,11 @@ License
 Rheostatic is licensed under the `MIT License`_ as defined in `LICENSE`.
 
 .. _MIT License: https://opensource.org/licenses/MIT
+
+Change Log
+==========
+
+Version 0.0.1 (2016/11/03)
+--------------------------
+
+The initial release.
