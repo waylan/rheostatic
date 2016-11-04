@@ -163,13 +163,13 @@ class Rheostatic(object):
     def simple_error(self, code, environ, start_response, headers=None):
         """ Send a plain text error. """
         headers = headers or []
-        status = self.get_status(code).encode(self.encoding)
+        status = self.get_status(code)
         headers.extend([
             ('Content-Length', str(len(status))),
             ('Content-type', 'text/plain; charset={}'.format(self.encoding))
         ])
         start_response(status, headers)
-        return [status]
+        return [status.encode(self.encoding)]
 
     def list_directory(self, path, environ, start_response):
         """ Return a directory listing. """

@@ -314,18 +314,18 @@ class TestResponses(TestCase):
         )
 
     def test_get_custom_dir_listing(self):
-        template = b'A replacement template'
+        template = 'A replacement template'
         self.assertResponse(
             app=make_app(directory_template=template),
             method='GET',
             url='/subdir/',
             status=200,
             headers={'Content-type': 'text/html; charset=utf-8'},
-            content=template
+            content=template.encode('utf-8')
         )
 
     def test_head_custom_dir_listing(self):
-        template = b'A replacement template'
+        template = 'A replacement template'
         self.assertResponse(
             app=make_app(directory_template=template),
             method='HEAD',
