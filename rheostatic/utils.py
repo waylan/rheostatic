@@ -138,6 +138,7 @@ types_map = {
     '.m3u8': 'application/vnd.apple.mpegurl',
     '.m4a': 'audio/x-m4a',
     '.m4v': 'video/x-m4v',
+    '.manifest': 'text/cache-manifest',
     '.mid': 'audio/midi',
     '.midi': 'audio/midi',
     '.mml': 'text/mathml',

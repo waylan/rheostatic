@@ -244,6 +244,11 @@ Rheostatic is licensed under the `MIT License`_ as defined in `LICENSE`.
 Change Log
 ==========
 
+Development Version
+-------------------
+
+* Added support for `text/cache-manifest` content type.
+
 Version 0.0.1 (2016/11/03)
 --------------------------
 
