@@ -103,7 +103,7 @@ Dependencies
 Rheostatic is a pure Python library with no external dependencies. It should run
 without issue on CPython versions 3.6, 3.7, 3.8, and 3.9 as well as `PyPy3`_.
 
-.. _PyPy: http://pypy.org/
+.. _PyPy3: http://pypy.org/
 
 Preparing your Files
 ====================
@@ -248,6 +248,7 @@ Development Version
 -------------------
 
 * Added support for `text/cache-manifest` content type.
+* Dropped support for Python versions less that 3.6.
 
 Version 0.0.1 (2016/11/03)
 --------------------------

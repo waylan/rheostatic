@@ -25,7 +25,6 @@ SOFTWARE.
 """
 
 import os
-import io
 from unittest import TestCase
 from wsgi_intercept import (
     http_client_intercept, add_wsgi_intercept, remove_wsgi_intercept
