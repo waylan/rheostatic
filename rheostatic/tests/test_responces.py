@@ -25,16 +25,11 @@ SOFTWARE.
 """
 
 import os
-import io
 from unittest import TestCase
 from wsgi_intercept import (
     http_client_intercept, add_wsgi_intercept, remove_wsgi_intercept
 )
-try:
-    import http.client as http_lib
-except ImportError:
-    import httplib as http_lib
-
+import http.client as http_lib
 from rheostatic.base import Rheostatic
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
@@ -47,7 +42,7 @@ def make_app(**kwargs):
 
 
 def get_file_content(path):
-    with io.open(os.path.join(ROOT, path), 'rb') as f:
+    with open(os.path.join(ROOT, path), 'rb') as f:
         return f.read()
 
 

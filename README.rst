@@ -101,9 +101,9 @@ Dependencies
 ------------
 
 Rheostatic is a pure Python library with no external dependencies. It should run
-without issue on CPython versions 2.7, 3.3, 3.4, and 3.5 as well as `PyPy`_.
+without issue on CPython versions 3.6, 3.7, 3.8, and 3.9 as well as `PyPy3`_.
 
-.. _PyPy: http://pypy.org/
+.. _PyPy3: http://pypy.org/
 
 Preparing your Files
 ====================
@@ -213,7 +213,7 @@ On the other hand, other simple servers often don't offer enough features to
 emulate a real server. Thus, Rheostatic was created to offer the flexibility and
 features to meet all of the needs of static site generators.
 
-Why is is called "Rheostatic"?
+Why is it called "Rheostatic"?
 ------------------------------
 
 I wanted something that accurately conveyed the purpose and function of the
@@ -248,6 +248,7 @@ Development Version
 -------------------
 
 * Added support for `text/cache-manifest` content type.
+* Dropped support for Python versions less that 3.6.
 
 Version 0.0.1 (2016/11/03)
 --------------------------

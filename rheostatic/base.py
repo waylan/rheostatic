@@ -29,19 +29,13 @@ import io
 import posixpath
 import wsgiref
 from email import utils as rfc822
-try:                                                    # pragma: no cover
-    from urllib.parse import unquote as urlunquote
-    from urllib.parse import quote as urlquote
-    from html import escape as html_escape
-except ImportError:                                     # pragma: no cover
-    from urllib import unquote as urlunquote
-    from urllib import quote as urlquote
-    from cgi import escape as html_escape
-
+from urllib.parse import unquote as urlunquote
+from urllib.parse import quote as urlquote
+from html import escape as html_escape
 from . import utils
 
 
-class Rheostatic(object):
+class Rheostatic:
     """
     Static File Server with options.
 
@@ -104,7 +98,7 @@ class Rheostatic(object):
                 # TODO: add support for HTTP_IF_MODIFIED_SINCE and HTTP_IF_NONE_MATCH
                 start_response(self.get_status(200), headers)
                 return self.get_body(path, environ)
-            except (IOError, OSError):                  # pragma: no cover
+            except OSError:                  # pragma: no cover
                 return self.error(404, environ, start_response)
 
         return self.error(404, environ, start_response)
@@ -129,7 +123,7 @@ class Rheostatic(object):
             return [b'']
         else:
             file_wrapper = environ.get('wsgi.file_wrapper', wsgiref.util.FileWrapper)
-            return file_wrapper(io.open(path, 'rb'))
+            return file_wrapper(open(path, 'rb'))
 
     def guess_type(self, path):
         extension = os.path.splitext(path)[1].lower()
@@ -144,7 +138,7 @@ class Rheostatic(object):
 
         """
         headers = headers or []
-        path = os.path.join(self.root, '%d.html' % code)
+        path = os.path.join(self.root, f'{code}.html')
         if os.path.isfile(path):
             try:
                 file_stat = os.stat(path)
@@ -155,7 +149,7 @@ class Rheostatic(object):
                 ])
                 start_response(self.get_status(code), headers)
                 return self.get_body(path, environ)
-            except (IOError, OSError):                  # pragma: no cover
+            except OSError:                  # pragma: no cover
                 return self.simple_error(code, environ, start_response, headers)
         else:
             return self.simple_error(code, environ, start_response, headers)
@@ -166,7 +160,7 @@ class Rheostatic(object):
         status = self.get_status(code)
         headers.extend([
             ('Content-Length', str(len(status))),
-            ('Content-type', 'text/plain; charset={}'.format(self.encoding))
+            ('Content-type', f'text/plain; charset={self.encoding}')
         ])
         start_response(status, headers)
         return [status.encode(self.encoding)]
@@ -204,7 +198,7 @@ class Rheostatic(object):
 
         headers = [
             ('Content-Length', str(length)),
-            ('Content-type', 'text/html; charset={}'.format(self.encoding))
+            ('Content-type', f'text/html; charset={self.encoding}')
         ]
         start_response(self.get_status(200), headers)
         file_wrapper = environ.get('wsgi.file_wrapper', wsgiref.util.FileWrapper)
