@@ -32,7 +32,7 @@ import os
 # (major, minor, micro, alpha/beta/rc/final, #)
 # (1, 1, 2, 'alpha', 0) => "1.1.2.dev"
 # (1, 2, 0, 'beta', 2) => "1.2b2"
-__version_info__ = (0, 0, 1, 'final', 0)
+__version_info__ = (0, 0, 2, 'final', 0)
 
 
 def _get_version():  # pragma: no cover

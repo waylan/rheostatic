@@ -6,9 +6,6 @@ Rheostatic
 
 A Static File Server with options.
 
-.. contents:: Table of Contents
-   :backlinks: top
-
 Features
 ========
 
@@ -24,78 +21,25 @@ Features
 .. |coverage| image:: https://codecov.io/gh/waylan/rheostatic/branch/master/graph/badge.svg?token=1v2THBaa3X
    :target: https://codecov.io/gh/waylan/Rheostatic
 .. |status| image:: https://img.shields.io/pypi/status/rheostatic.svg
-   :target: http://pypi.python.org/pypi/rheostatic
+   :target: https://pypi.org/project/Rheostatic/
 .. |version| image:: https://img.shields.io/pypi/v/rheostatic.svg
-   :target: http://pypi.python.org/pypi/rheostatic
+   :target: https://pypi.org/project/Rheostatic/
 .. |format| image:: https://img.shields.io/pypi/format/rheostatic.svg
-   :target: http://pypi.python.org/pypi/rheostatic#downloads
+   :target: https://pypi.org/project/Rheostatic/#files
 .. |pyversions| image:: https://img.shields.io/pypi/pyversions/rheostatic.svg
-   :target: http://pypi.python.org/pypi/rheostatic
+   :target: https://pypi.org/project/Rheostatic/
 .. |license| image:: https://img.shields.io/pypi/l/rheostatic.svg
    :target: https://opensource.org/licenses/MIT
 
-Options
-=======
-
-Rheostatic currently supports the following options:
-
-root
-----
-
-The local file system directory which the server should use as its "root"
-directory. Usually represented by ``/`` in the URL (for example
-``http://example.com/``). When ``root`` is set to a relative path, the local
-filesystem path is resolved as an absolute path relative to the current working
-directory. Absolute paths are used as-is.
-
-index_file
-----------
-
-The name of the file returned when a directory is requested (a URL ending with a
-``/``). A file by that name must be present in the requested directory. Defaults
-to ``index.html``.
-
-For example, a request to ``/`` would return the file at ``/index.html`` without
-redirecting the client.
-
-default_type
-------------
-
-The ContentType returned for a file when the type is unknown. Defaults to
-``application/octet-stream``.
-
-encoding
---------
-
-The encoding used to read and serve the files. Be sure all your files are saved
-using the same encoding. Defaults to ``utf-8``.
-
-directory_template
-------------------
-
-An HTML template used to display a directory listing when no index file is
-available for the requested directory. Defaults to the string defined at
-``utils.directory_template``.
-
-default_extension
------------------
-
-The extension to use for extensionless URLs. The requested URL must not end in
-an extension or a slash (``/``). This feature is disabled by default. To enable
-the feature, set the option to a string which contains both a dot and the
-desired extension. For example, with the option set to ``.html``, a request to
-``/foo`` would return the file ``/foo.html`` without redirecting the client.
+.. contents:: Table of Contents
+   :backlinks: top
 
 Installation
 ============
 
 To install Rheostatic run the following command::
 
-    pip install https://github.com/waylan/rheostatic/archive/master.zip
-
-Note that this is currently **alpha** software and not yet hosted on PyPI. As
-such, the above command downloads the source code from GitHub. Upon a stable
-release, the package will become available from PyPI.
+    pip install rheostatic
 
 Dependencies
 ------------
@@ -104,41 +48,6 @@ Rheostatic is a pure Python library with no external dependencies. It should run
 without issue on CPython versions 3.6, 3.7, 3.8, and 3.9 as well as `PyPy3`_.
 
 .. _PyPy3: http://pypy.org/
-
-Preparing your Files
-====================
-
-Before running the server, you need some files to serve. All files must be in
-the `root`_ directory and its sub-directories. In fact, an error will occur if a
-file is requested outside of the ``root`` directory. The ``root`` directory can
-exist anywhere on your filesystem as long as Rheostatic has permission to read
-the files.
-
-Ensure that all files are saved using the same encoding and that that encoding
-is being used by Rheostatic. See `encoding`_ for details.
-
-A file's ContentType is determined by its file extension. For best results, use
-common file extensions for your files. A list of known file extensions and the
-ContentType used for each can be found in `rheostatic/utils.py`_.
-
-.. _rheostatic/utils.py: https://github.com/waylan/rheostatic/blob/master/rheostatic/utils.py#L100
-
-If you would like a file to be served when the client requests a directory (for
-example ``/``, or ``/path/to/some/dir/``), then that directory needs to contain an
-index file. Be sure to use the file name for the index file set by the
-`index_file`_ option. The default for most servers (including Rheostatic) is
-``index.html``.
-
-If a directory does not contain an index file, then Rheostatic will return a
-directory listing of all the files in that directory (excluding files with names
-that start with a dot).
-
-For custom error pages, include files in the "root" directory named
-``<code>.html`` where ``<code>`` is the HTTP error code which the error page
-corresponds to. For example, a file named ``404.html`` would be returned for
-``404`` (Not Found) errors. Supported error codes include ``404`` (Not Found),
-and ``405`` (Method Not Allowed). If a custom error page is not found, then
-Rheostatic serves a simple plain-text error page.
 
 Use as a Command Line Tool
 ==========================
@@ -192,6 +101,92 @@ passed to any wsgi server. When initializing the class, you may pass in any
 
     print app.root
 
+Preparing your Files
+====================
+
+Before running the server, you need some files to serve. All files must be in
+the `root`_ directory and its sub-directories. In fact, an error will occur if a
+file is requested outside of the ``root`` directory. The ``root`` directory can
+exist anywhere on your filesystem as long as Rheostatic has permission to read
+the files.
+
+Ensure that all files are saved using the same encoding and that that encoding
+is being used by Rheostatic. See `encoding`_ for details.
+
+A file's ContentType is determined by its file extension. For best results, use
+common file extensions for your files. A list of known file extensions and the
+ContentType used for each can be found in `rheostatic/utils.py`_.
+
+.. _rheostatic/utils.py: https://github.com/waylan/rheostatic/blob/master/rheostatic/utils.py#L100
+
+If you would like a file to be served when the client requests a directory (for
+example ``/``, or ``/path/to/some/dir/``), then that directory needs to contain an
+index file. Be sure to use the file name for the index file set by the
+`index_file`_ option. The default for most servers (including Rheostatic) is
+``index.html``.
+
+If a directory does not contain an index file, then Rheostatic will return a
+directory listing of all the files in that directory (excluding files with names
+that start with a dot).
+
+For custom error pages, include files in the "root" directory named
+``<code>.html`` where ``<code>`` is the HTTP error code which the error page
+corresponds to. For example, a file named ``404.html`` would be returned for
+``404`` (Not Found) errors. Supported error codes include ``404`` (Not Found),
+and ``405`` (Method Not Allowed). If a custom error page is not found, then
+Rheostatic serves a simple plain-text error page.
+
+Options
+=======
+
+Rheostatic currently supports the following options:
+
+root
+----
+
+The local file system directory which the server should use as its "root"
+directory. Usually represented by ``/`` in the URL (for example
+``http://example.com/``). When ``root`` is set to a relative path, the local
+filesystem path is resolved as an absolute path relative to the current working
+directory. Absolute paths are used as-is.
+
+index_file
+----------
+
+The name of the file returned when a directory is requested (a URL ending with a
+``/``). A file by that name must be present in the requested directory. Defaults
+to ``index.html``.
+
+For example, a request to ``/`` would return the file at ``/index.html`` without
+redirecting the client.
+
+default_type
+------------
+
+The ContentType returned for a file when the type is unknown. Defaults to
+``application/octet-stream``.
+
+encoding
+--------
+
+The encoding used to read and serve the files. Be sure all your files are saved
+using the same encoding. Defaults to ``utf-8``.
+
+directory_template
+------------------
+
+An HTML template used to display a directory listing when no index file is
+available for the requested directory. Defaults to the string defined at
+``utils.directory_template``.
+
+default_extension
+-----------------
+
+The extension to use for extensionless URLs. The requested URL must not end in
+an extension or a slash (``/``). This feature is disabled by default. To enable
+the feature, set the option to a string which contains both a dot and the
+desired extension. For example, with the option set to ``.html``, a request to
+``/foo`` would return the file ``/foo.html`` without redirecting the client.
 
 Infrequently Asked Questions
 ============================
@@ -244,13 +239,13 @@ Rheostatic is licensed under the `MIT License`_ as defined in `LICENSE`.
 Change Log
 ==========
 
-Development Version
--------------------
+Version 0.0.2 (2020-10-27)
+--------------------------
 
 * Added support for `text/cache-manifest` content type.
 * Dropped support for Python versions less that 3.6.
 
-Version 0.0.1 (2016/11/03)
+Version 0.0.1 (2016-11-03)
 --------------------------
 
 The initial release.
