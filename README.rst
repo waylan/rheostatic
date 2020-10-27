@@ -19,10 +19,10 @@ Features
 * Does not require the server root to be the current working directory.
 * |build| |coverage| |status| |version| |format| |pyversions| |license|
 
-.. |build| image:: https://img.shields.io/travis/waylan/rheostatic/master.svg
-   :target: https://travis-ci.org/waylan/rheostatic
-.. |coverage| image:: https://img.shields.io/coveralls/waylan/rheostatic/master.svg
-   :target: https://coveralls.io/r/waylan/rheostatic?branch=master
+.. |build| image:: https://github.com/waylan/rheostatic/workflows/CI/badge.svg?event=push
+   :target: https://github.com/waylan/rheostatic/actions?query=workflow%3ACI+event%3Apush
+.. |coverage| image:: https://codecov.io/gh/waylan/rheostatic/branch/master/graph/badge.svg?token=1v2THBaa3X
+   :target: https://codecov.io/gh/waylan/Rheostatic
 .. |status| image:: https://img.shields.io/pypi/status/rheostatic.svg
    :target: http://pypi.python.org/pypi/rheostatic
 .. |version| image:: https://img.shields.io/pypi/v/rheostatic.svg
